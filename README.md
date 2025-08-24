@@ -27,16 +27,20 @@ ssc2.exeを実行するとタスクトレイに常駐します。一定間隔で
 
 iniファイルの設定でインターバルを指定できます。単位は分です。
 
+```
 [ssc2]
 interval=2
+```
 
 ## Windows Appの無入力監視を回避する
 
 Windows Appが無入力で回線切断するのを回避するためには、iniファイルの以下の項目を設定してssc2.exeを再起動してください。
 
+```
 [ssc2]
 send_message=1
 caption=【Windows Appのキャプション文字列】
+```
 
 Windows Appの接続先でもssc2.exeを実行してください。Windows Appの接続先側ではsend_message=0で問題ありません。
 
