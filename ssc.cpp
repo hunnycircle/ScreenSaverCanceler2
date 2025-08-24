@@ -87,8 +87,9 @@ void ssc_sendMessage(const wchar_t* caption)
 
 	if (AttachThreadInput(my_thread, target_thread, TRUE) != 0) {
 		input.type = INPUT_MOUSE;
-		input.mi.dwFlags = MOUSEEVENTF_WHEEL;
-		input.mi.mouseData = 1;
+		input.mi.dwFlags = MOUSEEVENTF_MOVE;
+		input.mi.dx = 0;
+		input.mi.dy = 0;
 		SendInput(1, &input, sizeof(input));
 		AttachThreadInput(my_thread, target_thread, FALSE);
 	}
