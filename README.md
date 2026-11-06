@@ -10,7 +10,7 @@
 # Requirement
 
 * Microsoft Windows 11（x64）
-* たぶん [Microsoft Visual C++ Redistributable for Visual Studio 2022（x64）](https://visualstudio.microsoft.com/ja/downloads/) が必要
+* たぶん [Microsoft Visual C++ v14 再頒布可能パッケージ（x64）](https://visualstudio.microsoft.com/ja/downloads/) が必要
 
 # Installation
 
@@ -40,6 +40,22 @@ Windows Appが無入力で回線切断するのを回避するためには、ini
 [ssc2]
 send_message=1
 caption=【Windows Appのキャプション文字列】
+```
+
+Windows Appの無入力による回線切断の回避を複数ウインドウに対して行う場合、以下の設定を追加してください。
+
+countが0以外の時、[ssc2]セクションのcaptionは無視されます。send_messageの値は有効です。
+
+caption_1～5はcaption_1から設定してください。
+
+```
+[targets]
+count=【定義数1～5】
+caption_1=【Windows Appのキャプション文字列】
+caption_2=【Windows Appのキャプション文字列】
+caption_3=【Windows Appのキャプション文字列】
+caption_4=【Windows Appのキャプション文字列】
+caption_5=【Windows Appのキャプション文字列】
 ```
 
 Windows Appの接続先でもssc2.exeを実行してください。Windows Appの接続先側ではsend_message=0で問題ありません。

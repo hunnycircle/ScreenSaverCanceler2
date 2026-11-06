@@ -4,6 +4,7 @@
 #include <wchar.h>
 
 #define SSC_WM_NOTIFYICON (WM_USER + 100)
+#define SEND_MAX (5)
 
 void ssc_init(HWND, HINSTANCE);
 void ssc_terminate(HWND);

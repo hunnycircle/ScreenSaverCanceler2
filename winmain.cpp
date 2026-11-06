@@ -23,10 +23,17 @@ struct {
 	UINT interval = 0;
 	bool send_message = false;
 	CString caption;
+
+	struct {
+		UINT count = 0;
+		CString captions[SEND_MAX];
+	} targets;
 } _props;
 
 static void loadProperties()
 {
+	wchar_t	key[10];
+
 	TCHAR filepath[_MAX_PATH + 1]{};
 	DWORD size = 0;
 
@@ -39,6 +46,15 @@ static void loadProperties()
 	_props.send_message = (GetPrivateProfileInt(L"ssc2", L"send_message", 0, filepath) != 0);
 	size = GetPrivateProfileString(L"ssc2", L"caption", L"", _props.caption.GetBuffer(_MAX_CAPTION), _MAX_CAPTION, filepath);
 	_props.caption.ReleaseBuffer(size);
+
+	if ((_props.targets.count = GetPrivateProfileInt(L"targets", L"count", 0, filepath)) > 0) {
+		if (_props.targets.count > SEND_MAX) _props.targets.count = SEND_MAX;
+		for (UINT i = 0; i < _props.targets.count; i++) {
+			_snwprintf_s(key, _countof(key), L"caption_%u", i + 1);
+			size = GetPrivateProfileString(L"targets", key, L"", _props.targets.captions[i].GetBuffer(_MAX_CAPTION), _MAX_CAPTION, filepath);
+			_props.targets.captions[i].ReleaseBuffer(size);
+		}
+	}
 }
 
 static ATOM registFrameWindow(HINSTANCE inst)
@@ -89,7 +105,15 @@ static LRESULT mainWindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 		case WM_TIMER:
 		{
 			ssc_state();
-			if (_props.send_message) ssc_sendMessage(_props.caption);
+			if (_props.send_message) {
+				if (_props.targets.count > 0) {
+					for (UINT i = 0; i < _props.targets.count; i++) {
+						if(!_props.targets.captions[i].IsEmpty()) ssc_sendMessage(_props.targets.captions[i]);
+					}
+				} else {
+					ssc_sendMessage(_props.caption);
+				}
+			}
 		}
 		break;
 
