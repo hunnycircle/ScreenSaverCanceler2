@@ -42,6 +42,8 @@ send_message=1
 caption=【Windows Appのキャプション文字列】
 ```
 
+v2.1.0からの追加機能。
+
 Windows Appの無入力による回線切断の回避を複数ウインドウに対して行う場合、以下の設定を追加してください。
 
 countが0以外の時、[ssc2]セクションのcaptionは無視されます。send_messageの値は有効です。
